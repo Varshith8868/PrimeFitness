@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100" 
+    style="background: url('https://img.freepik.com/free-vector/gold-luxury-background-with-shapes_23-2148593362.jpg?t=st=1740648127~exp=1740651727~hmac=4a0f2c9f7d158831d62615cf2091f739c4864663e3d22f96b1caaa5a73a895ee&w=1380') no-repeat center center/cover;">
+    
+    <div class="card shadow-lg p-5 rounded" style="max-width: 450px; width: 100%; background: #232323; color: white; border: 2px solid #ff6600;">
+        <h2 class="text-center fw-bold mb-4" style="color: #ff6600;"> Welcome!</h2>
+        
+        <form method="post" class="form">
+            {% csrf_token %}
+            
+            <div class="form-group mb-3">
+                <label for="username" style="font-weight: bold; color: #ff6600;">Username:</label>
+                <input type="text" name="username" id="username" class="form-control custom-input" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="password" style="font-weight: bold; color: #ff6600;">Password:</label>
+                <input type="password" name="password" id="password" class="form-control custom-input" required>
+            </div>
+
+            <button type="submit" class="btn w-100 fw-bold" style="background: #ff6600; color: white; transition: 0.3s;">
+                Login 🚀
+            </button>
+        </form>
+
+        <p class="text-center mt-3">
+            Don't have an account? 
+            <a href="{% url 'signup' %}" style="color: #ff6600; font-weight: bold;">Sign Up</a>
+        </p>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* 🔥 Full Background Cover */
+    body {
+        background: url('https://img.freepik.com/free-vector/gold-luxury-background-with-shapes_23-2148593362.jpg?t=st=1740648127~exp=1740651727~hmac=4a0f2c9f7d158831d62615cf2091f739c4864663e3d22f96b1caaa5a73a895ee&w=1380') no-repeat center center/cover;
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ff6600;
+        background: #232323;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .custom-input:focus {
+        outline: none;
+        box-shadow: 0 0 10px #ff6600;
+    }
+
+    .btn:hover {
+        background: white !important;
+        color: #ff6600 !important;
+        border: 2px solid #ff6600;
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

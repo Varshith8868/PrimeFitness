@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* 🔥 Smooth Animations & Effects */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowText {
+        from { text-shadow: 0px 0px 10px #ffbb00; }
+        to { text-shadow: 0px 0px 20px #ff6600; }
+    }
+
+    .container {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .text-warning {
+        animation: glowText 1.5s infinite alternate;
+    }
+
+    .card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 20px rgba(255, 187, 0, 1);
+    }
+
+    .form-control:focus {
+        border-color: #ff6600;
+        box-shadow: 0px 0px 10px rgba(255, 102, 0, 1);
+        transform: scale(1.02);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #ffbb00, #ff6600);
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 0px 15px rgba(255, 102, 0, 0.8);
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center text-warning">Plan Your Budget</h2>
+    <p class="text-center text-muted">
+        Enter your monthly budget to see how it impacts your diet plan. Choose a budget category to optimize your meals.
+    </p>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title text-center">Budget Categories</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Low Budget:</strong> ₹4,000/month → ~150g protein/day
+                </li>
+                <li class="list-group-item">
+                    <strong>Medium Budget:</strong> ₹8,000/month → ~200g protein/day
+                </li>
+                <li class="list-group-item">
+                    <strong>High Budget:</strong> ₹16,000+/month → ~300g protein/day
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="budget">Enter Your Monthly Budget (₹)</label>
+            <input type="number" name="budget" id="budget" class="form-control" placeholder="Enter your budget" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Submit Budget</button>
+    </form>
+</div>
+
+{% endblock %}

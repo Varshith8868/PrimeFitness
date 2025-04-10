@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowText {
+        from { text-shadow: 0px 0px 10px #ffbb00; }
+        to { text-shadow: 0px 0px 20px #ff6600; }
+    }
+
+    .container {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .text-warning {
+        animation: glowText 1.5s infinite alternate;
+    }
+
+    .card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        margin-bottom: 15px;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0px 0px 15px rgba(255, 187, 0, 0.8);
+    }
+
+    .list-group-item {
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: white;
+        border: 2px solid #ffcc00;
+        transition: all 0.3s;
+    }
+
+    .list-group-item:hover {
+        background-color: #fff6d5;
+        box-shadow: 0px 0px 10px rgba(255, 204, 0, 0.5);
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center text-warning">Your Optimized Monthly Diet Plan</h2>
+
+    {% if error %}
+        <p class="text-danger text-center mt-4">{{ error }}</p>
+    {% else %}
+        <h4 class="text-center text-muted">Budget: ₹{{ budget }}</h4>
+        {% if meal_plan %}
+            {% if meal_plan.error %}
+                <p class="text-danger text-center mt-4">{{ meal_plan.error }}</p>
+            {% else %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for meal, details in meal_plan.items %}
+                                {% if meal != "Total_Protein" and meal != "Total_Protein_Per_Day" %}
+                                    <li class="list-group-item">
+                                        <h5><strong>{{ meal }}</strong></h5>
+                                        <p><strong>Food Items:</strong> {{ details.items|join:", " }}</p>
+                                        <p><strong>Protein Gain (Per Day):</strong> {{ details.protein_per_day|floatformat:1 }}g/day</p>
+                                        <p><strong>Protein Gain (Per Month):</strong> {{ details.protein_per_month|floatformat:1 }}g/month</p>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <span><strong>Total Protein (Per Day)</strong></span>
+                                <span class="badge bg-success">{{ meal_plan.Total_Protein_Per_Day|floatformat:1 }}g/day</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <span><strong>Total Protein (Monthly)</strong></span>
+                                <span class="badge bg-primary">{{ meal_plan.Total_Protein|floatformat:1 }}g</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}
